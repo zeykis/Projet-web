@@ -1,21 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculatrice</title>
-  <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link rel="preconnect" href="https://fonts.bunny.net" />
   <link href="https://fonts.bunny.net/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
-
+  <script src="/src/calc.js"></script>
   <link href="/src/style.css" rel="stylesheet">
 </head>
-
 <body>
-  <div class="min-h-dvh min-w-[320px] bg-white text-gray-800 dark:bg-gray-950 dark:text-gray-100">
+  <div class="navbar bg-base-100 shadow-sm">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            <li><a href="index.html">CV</a></li>
+          </ul>
+        </div>
+        <a class="btn btn-ghost text-xl">CV</a>
+      </div>
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+          <a href="index.html">
+          <button class="btn btn-link">CV</button>
+          </a></li>
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <a class="btn" href="contact.html">Contact</a>
+      </div>
+    </div>
+  <div class="bg-[#0e0f16] text-white min-h-screen flex items-center justify-center">
+    <div class="rounded-3xl border border-white p-4 w-[350px]">
+      <div class="rounded-xl border border-white p-4 mb-4 text-right text-2xl h-16" id="display">0</div>
+      <div class="grid grid-cols-4 gap-3">
+        <button class="btn" onclick="clearDisplay()">C</button>
+        <button class="btn" onclick="append('/')">÷</button>
+        <button class="btn" onclick="append('*')">×</button>
+        <button class="btn" onclick="delChar()">⌫</button>
+        <button class="btn" onclick="append('7')">7</button>
+        <button class="btn" onclick="append('8')">8</button>
+        <button class="btn" onclick="append('9')">9</button>
+        <button class="btn" onclick="append('-')">−</button>
+        <button class="btn" onclick="append('4')">4</button>
+        <button class="btn" onclick="append('5')">5</button>
+        <button class="btn" onclick="append('6')">6</button>
+        <button class="btn" onclick="append('+')">+</button>
+        <button class="btn" onclick="append('1')">1</button>
+        <button class="btn" onclick="append('2')">2</button>
+        <button class="btn" onclick="append('3')">3</button>
+        <button class="btn row-span-2 bg-white text-black" onclick="calculate()">=</button>
+        <button class="btn col-span-2" onclick="append('0')">0</button>
+        <button class="btn" onclick="append('.')">.</button>
+      </div>
+    </div>
   </div>
-  <script src="src/main.js"></script>
 </body>
-
 </html>

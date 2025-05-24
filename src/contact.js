@@ -28,17 +28,21 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let score = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
   loadQuestion();
 });
+
 function loadQuestion() {
   const quizContainer = document.getElementById('quiz-container');
   const questionElement = document.getElementById('question');
   const answersElement = document.getElementById('answers');
+  
   if (currentQuestionIndex < questions.length) {
     const currentQuestion = questions[currentQuestionIndex];
     questionElement.textContent = currentQuestion.question;
     answersElement.innerHTML = '';
+    
     currentQuestion.answers.forEach((answer, index) => {
       const button = document.createElement('button');
       button.textContent = answer;
@@ -56,6 +60,7 @@ function loadQuestion() {
     `;
   }
 }
+
 function selectAnswer(selectedIndex) {
   const currentQuestion = questions[currentQuestionIndex];
   const buttons = document.querySelectorAll('#answers button');
@@ -74,5 +79,5 @@ function selectAnswer(selectedIndex) {
   setTimeout(() => {
     currentQuestionIndex++;
     loadQuestion();
-  }, 2000);
+  }, 1000);
 }

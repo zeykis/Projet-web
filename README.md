@@ -1,8 +1,3 @@
-# Web developpement project
-Welcome to web dev project for my 1st year of undergraduate studies
-
-You can directly access the website by clicking [here](https://zeykis.github.io/gomes_thibault/)    
-Or you can host it locally by following these steps   
 
 # Web Dev Project
 Welcome to web dev project for my 1st year of undergraduate studies

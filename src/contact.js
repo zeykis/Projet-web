@@ -100,7 +100,6 @@ function selectAnswer(selectedIndex) {
     }, bruteForceMode ? 1000 : 2000);
   } else {
     selectedButton.classList.add('incorrect');
-    buttons[currentQuestion.correct].classList.add('correct');
     
     setTimeout(() => {
       resetQuiz();
@@ -127,28 +126,37 @@ function toggleBruteForce() {
 }
 
 function tryNextAnswer() {
-  stopBruteForce();
-  
-  const buttons = document.querySelectorAll('#answers button');
-  if (!buttons.length || currentBruteForceAttempt >= buttons.length) {
-    bruteForceTimeout = setTimeout(() => {
-      resetQuiz();
-    }, 1000);
-    return;
-  }
-  
-  const button = buttons[currentBruteForceAttempt];
-  button.click();
-  button.classList.add('selected');
-  
+  if (bruteForceTimeout) return;
   const currentQuestion = questions[currentQuestionIndex];
-  if (currentBruteForceAttempt === currentQuestion.correct) {
-    button.classList.add('correct');
+  const buttons = document.querySelectorAll('#answers button');
+  if (currentBruteForceAttempt < currentQuestion.answers.length) {
+    const answerIndex = currentBruteForceAttempt;
+    const selectedButton = buttons[answerIndex];
+    
+    selectedButton.classList.add('selected');
+    
+    if (answerIndex === currentQuestion.correct) {
+      selectedButton.classList.add('correct');
+      score++;
+      currentQuestionIndex++;
+      currentBruteForceAttempt = 0;
+      loadQuestion();
+    } else {
+      selectedButton.classList.add('incorrect');
+      buttons[currentQuestion.correct].classList.add('correct');
+      currentBruteForceAttempt++;
+      
+      bruteForceTimeout = setTimeout(() => {
+        tryNextAnswer();
+      }, 1000);
+    }
   } else {
-    button.classList.add('incorrect');
+    resetQuiz();
   }
-  
-  currentBruteForceAttempt++;
+  if (currentQuestionIndex >= questions.length) {
+    showQuizCompletion();
+  }
+
 }
 
 function stopBruteForce() {

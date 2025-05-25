@@ -80,9 +80,14 @@ function showQuizCompletion() {
   stopBruteForce();
 }
 
+function isCorrectAnswer(selectedIndex) {
+  const currentQuestion = questions[currentQuestionIndex];
+  return selectedIndex === currentQuestion.correct;
+}
+
+
 function selectAnswer(selectedIndex) {
   if (bruteForceTimeout) return;
-
   const currentQuestion = questions[currentQuestionIndex];
   const buttons = document.querySelectorAll('#answers button');
   buttons.forEach(button => button.disabled = true);
@@ -93,17 +98,19 @@ function selectAnswer(selectedIndex) {
   if (selectedIndex === currentQuestion.correct) {
     selectedButton.classList.add('correct');
     score++;
+    //console.log(isCorrectAnswer(selectedIndex));
     
     setTimeout(() => {
       currentQuestionIndex++;
       loadQuestion();
-    }, bruteForceMode ? 1000 : 2000);
+    }, bruteForceMode ? 0 : 1000);
   } else {
     selectedButton.classList.add('incorrect');
+    //console.log(isCorrectAnswer(selectedIndex));
     
     setTimeout(() => {
       resetQuiz();
-    }, 1000);
+    }, 500);
   }
 }
 
@@ -121,31 +128,38 @@ function toggleBruteForce() {
     bruteForceBtn.textContent = 'Brute Force';
     bruteForceBtn.classList.remove('bg-red-600');
     bruteForceBtn.classList.add('bg-purple-600');
+    resetQuiz();
     stopBruteForce();
   }   
 }
 
 function tryNextAnswer() {
-  if (bruteForceTimeout) return;
   const currentQuestion = questions[currentQuestionIndex];
   const buttons = document.querySelectorAll('#answers button');
+  buttons.forEach(element => {
+    element.classList.remove('selected', 'correct', 'incorrect');
+    element.disabled = false;
+    
+  });
   if (currentBruteForceAttempt < currentQuestion.answers.length) {
     const answerIndex = currentBruteForceAttempt;
     const selectedButton = buttons[answerIndex];
     
     selectedButton.classList.add('selected');
-    
+   
     if (answerIndex === currentQuestion.correct) {
       selectedButton.classList.add('correct');
       score++;
       currentQuestionIndex++;
       currentBruteForceAttempt = 0;
-      loadQuestion();
+      //console.log("selected answer: " + selectedButton.textContent);
+      bruteForceTimeout = setTimeout(() => {
+        loadQuestion();
+      }, 500);
     } else {
+      //console.log("selected answer: " + selectedButton.textContent);
       selectedButton.classList.add('incorrect');
-      buttons[currentQuestion.correct].classList.add('correct');
       currentBruteForceAttempt++;
-      
       bruteForceTimeout = setTimeout(() => {
         tryNextAnswer();
       }, 1000);
@@ -170,7 +184,9 @@ function resetQuiz() {
   stopBruteForce();
   currentQuestionIndex = 0;
   score = 0;
+  buttons = document.querySelectorAll('#answers button');
   document.getElementById('contact-form').classList.add('hidden');
+  console.log("Quiz reset");
   loadQuestion();
 }
 

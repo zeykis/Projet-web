@@ -184,9 +184,8 @@ function resetQuiz() {
   stopBruteForce();
   currentQuestionIndex = 0;
   score = 0;
-  buttons = document.querySelectorAll('#answers button');
   document.getElementById('contact-form').classList.add('hidden');
-  console.log("Quiz reset");
+  //console.log("Quiz reset");
   loadQuestion();
 }
 
